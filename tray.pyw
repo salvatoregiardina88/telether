@@ -43,13 +43,19 @@ import strings
 
 
 def make_icon_image() -> Image.Image:
+    # Prefer the brand icon file; fall back to a drawn glyph if missing.
+    icon_file = SCRIPT_DIR / "icon.png"
+    if icon_file.exists():
+        try:
+            return Image.open(icon_file).convert("RGBA")
+        except Exception:
+            pass
     img = Image.new("RGBA", (64, 64), (0, 0, 0, 0))
     d = ImageDraw.Draw(img)
-    d.rounded_rectangle([4, 8, 60, 56], radius=10, fill=(37, 99, 235, 255))
-    # prompt ">"
-    d.line([(16, 22), (26, 32), (16, 42)], fill=(255, 255, 255, 255), width=4, joint="curve")
-    # cursore "_"
-    d.rectangle([30, 40, 46, 44], fill=(255, 255, 255, 255))
+    d.rounded_rectangle([4, 8, 60, 56], radius=12, fill=(37, 99, 235, 255))
+    d.line([(15, 22), (27, 32), (15, 42)], fill=(255, 255, 255, 255), width=5, joint="curve")
+    d.rounded_rectangle([33, 22, 52, 27], radius=2, fill=(255, 255, 255, 255))
+    d.rounded_rectangle([40, 22, 45, 43], radius=2, fill=(255, 255, 255, 255))
     return img
 
 

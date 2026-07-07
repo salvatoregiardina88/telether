@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="docs/logo.png" alt="Telether logo" width="128" height="128">
+</p>
+
 # Telether — control your Windows terminal from Telegram
 
 **Telether is a lightweight Windows app that bridges a real terminal session to
