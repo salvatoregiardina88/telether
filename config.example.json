@@ -1,0 +1,12 @@
+{
+  "bot_token": "",
+  "allowed_chat_ids": [],
+  "language": "en",
+  "shell": "powershell.exe -NoLogo",
+  "cwd": "",
+  "cols": 80,
+  "rows": 30,
+  "auto_enter": true,
+  "render_interval": 1.5,
+  "attach_port": 8765
+}

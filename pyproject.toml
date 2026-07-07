@@ -1,0 +1,43 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "telether"
+version = "1.0.0"
+description = "Control your Windows terminal from Telegram — run Claude Code, Codex CLI and other TUIs from your phone."
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "PolyForm Noncommercial License 1.0.0" }
+authors = [{ name = "Salvatore Giardina" }]
+keywords = [
+  "telegram", "terminal", "windows", "claude-code", "codex", "codex-cli",
+  "remote-terminal", "powershell", "conpty", "cli", "chatops", "tmux", "ssh",
+  "mobile-terminal", "telegram-bot",
+]
+classifiers = [
+  "Environment :: Console",
+  "Operating System :: Microsoft :: Windows",
+  "Programming Language :: Python :: 3",
+  "Topic :: Terminals",
+  "Topic :: Communications :: Chat",
+  "Intended Audience :: Developers",
+]
+dependencies = [
+  "python-telegram-bot>=22,<23",
+  "pywinpty>=3,<4",
+  "pyte>=0.8,<1",
+  "pystray>=0.19,<1",
+  "pillow>=10",
+]
+
+[project.urls]
+Homepage = "https://github.com/salvatoregiardina88/telether"
+Repository = "https://github.com/salvatoregiardina88/telether"
+Issues = "https://github.com/salvatoregiardina88/telether/issues"
+
+[project.scripts]
+telether = "bridge:main"
+
+[tool.setuptools]
+py-modules = ["bridge", "attach", "strings"]
