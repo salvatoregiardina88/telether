@@ -558,29 +558,35 @@ async def dispatch(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await send_text_line(state, text)
 
 
-def submit_sequence(text: str) -> str:
-    """Bytes to type `text` into the terminal and submit it with Enter.
+def paste_block(text: str) -> str:
+    """Wrap multi-line text as a bracketed paste with LF line breaks.
 
-    If the message spans multiple lines, the line breaks are sent inside a
-    *bracketed paste* (ESC[200~ … ESC[201~) so that TUIs like Claude Code and
-    Codex treat them as soft line breaks in the input, NOT as separate Enters.
-    A final CR then submits the whole message once. Single-line messages are
-    just `text` + CR.
+    Line breaks are sent as LF (\\n): TUIs like Claude Code and Codex (which
+    enable bracketed paste) treat them as soft newlines inside the input, and
+    PowerShell — which ignores the paste markers — reads LF as a line
+    continuation. Either way the message stays one input and is NOT submitted
+    line by line. The submitting Enter (CR) is sent separately afterwards.
     """
-    if "\n" in text or "\r" in text:
-        body = text.replace("\r\n", "\n").replace("\r", "\n").replace("\n", "\r")
-        return "\x1b[200~" + body + "\x1b[201~" + "\r"
-    return text + "\r"
+    body = text.replace("\r\n", "\n").replace("\r", "\n")
+    return "\x1b[200~" + body + "\x1b[201~"
 
 
 async def send_text_line(state: State, text: str):
     sess = state.active
     if sess is None:
         return
-    if state.config.get("auto_enter", True):
-        sess.term.write(submit_sequence(text))
-    else:
+    if not state.config.get("auto_enter", True):
         sess.term.write(text)
+        state.want_new_message = True
+        return
+    if "\n" in text or "\r" in text:
+        # multi-line: paste the body, then a separate (slightly delayed) Enter so
+        # the app registers a single submit after the paste is fully processed.
+        sess.term.write(paste_block(text))
+        await asyncio.sleep(0.12)
+        sess.term.write("\r")
+    else:
+        sess.term.write(text + "\r")
     state.want_new_message = True
 
 
