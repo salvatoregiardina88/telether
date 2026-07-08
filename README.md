@@ -13,7 +13,9 @@ program: PowerShell, `ssh`, long‑running builds, `npm`, `git`, servers, and mo
 > Run **Claude Code** and **Codex** on your PC, keep working from your phone over
 > Telegram, then sit back down and pick up the exact same session on your desktop.
 
-![Telether — live terminal in a Telegram chat](docs/screenshots/telegram-chat.png)
+<p align="center">
+  <img src="docs/screenshots/telegram-chat.png" alt="Telether — live terminal in a Telegram chat" width="360" height="800">
+</p>
 
 ![Platform: Windows 10/11](https://img.shields.io/badge/platform-Windows%2010%2F11-0078D6)
 ![Python 3.9+](https://img.shields.io/badge/python-3.9%2B-3776AB)
@@ -53,14 +55,22 @@ same session shared live between your phone and your PC.
   the local attach channel is bound to `127.0.0.1`.
 
 ## Screenshots
-
-| Session switch buttons | System‑tray menu |
-|---|---|
-| ![Session buttons](docs/screenshots/session-buttons.png) | ![Tray menu](docs/screenshots/tray-menu.png) |
-
-| Attach window on the PC | Claude Code over Telegram |
-|---|---|
-| ![Attach window](docs/screenshots/attach-window.png) | ![Claude Code over Telegram](docs/screenshots/claude-code.png) |
+  **Telether — Session buttons**
+    <p align="center">  
+      <img src="docs/screenshots/session-buttons.png" alt="Telether — Session buttons" width="540" height="1200">
+    </p>
+  **Telether — Tray menu**
+    <p align="center">
+      <img src="docs/screenshots/tray-menu.png" alt="Telether — Tray menu" width="934" height="274">
+    </p>
+  **Telether — Attach window**
+    <p align="center">
+      <img src="docs/screenshots/attach-window.png" alt="Telether — Attach window" width="1113" height="632">
+    </p>
+  **Telether — Codex**
+    <p align="center">
+      <img src="docs/screenshots/claude-code.png" alt="Telether — Codex" width="540" height="1200">
+    </p>
 
 ## How it works
 
