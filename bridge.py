@@ -558,12 +558,27 @@ async def dispatch(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await send_text_line(state, text)
 
 
+def submit_sequence(text: str) -> str:
+    """Bytes to type `text` into the terminal and submit it with Enter.
+
+    If the message spans multiple lines, the line breaks are sent inside a
+    *bracketed paste* (ESC[200~ … ESC[201~) so that TUIs like Claude Code and
+    Codex treat them as soft line breaks in the input, NOT as separate Enters.
+    A final CR then submits the whole message once. Single-line messages are
+    just `text` + CR.
+    """
+    if "\n" in text or "\r" in text:
+        body = text.replace("\r\n", "\n").replace("\r", "\n").replace("\n", "\r")
+        return "\x1b[200~" + body + "\x1b[201~" + "\r"
+    return text + "\r"
+
+
 async def send_text_line(state: State, text: str):
     sess = state.active
     if sess is None:
         return
     if state.config.get("auto_enter", True):
-        sess.term.write(text + "\r")
+        sess.term.write(submit_sequence(text))
     else:
         sess.term.write(text)
     state.want_new_message = True
